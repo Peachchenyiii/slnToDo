@@ -1,0 +1,57 @@
+﻿@*View會使用tToDo的模型，即@model*@
+@model IEnumerable<prjToDo.Models.tToDo>
+
+@{
+    ViewBag.Title = "待辦事項";
+}
+
+<h2>待辦事項</h2>
+
+<p>
+    @Html.ActionLink("待辦事項新增", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            編號
+        </th>
+        <th>
+            標題
+        </th>
+        <th>
+            圖示
+        </th>
+        <th>
+            結案日
+        </th>
+        <th></th>
+    </tr>
+
+    @*foreach迴圈逐一將Model模型中的每一筆紀錄顯示出來*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.fId
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fTitle)
+            </td>
+            <td>
+                <img src="~/images/@item.fImage" width="32" />
+            </td>
+            <td>
+                @DateTime.Parse(item.fDate.ToString()).ToShortDateString()
+            </td>
+            <td>
+                @*使用HtmlHelper的@Html.ActionLink()方法來指定超連結功能，
+                    當按下Edit文字連結會執行Home控制器的Edit方法，並傳送URL參數Id，而Id參數值是fId屬性資料*@
+                @Html.ActionLink("Edit", "Edit", new { id = item.fId }) |
+                @*使用HtmlHelper的@Html.ActionLink()方法來指定超連結功能，
+                    當按下Delete文字連結會執行Home控制器的Delete方法，並傳送URL參數Id，而Id參數值是fId屬性資料*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.fId }, new { onclick= "return confirm('確定要刪除嗎?')" })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,67 @@
+﻿@*此處的View會使用tToDo的模型，即@model*@
+@model prjToDo.Models.tToDo
+
+@{
+    ViewBag.Title = "待辦事項修改";
+}
+
+<h2>待辦事項修改</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*使用@Html.HiddenFor()方法產生名稱為fId的隱藏欄位*@
+    @*第20行，Edit.cshtml會產生名稱為fId、fTitle、fImage、fDate表單欄位，
+        這四個欄位會和Edit(int fId, string fTitle, string fImage, DateTome fDate)方法進行資料繫結*@
+    @Html.HiddenFor(model => model.fId)
+
+    <div class="form-group">
+        <label class="control-label col-md-2">標題</label>
+        <div class="col-md-10">
+            @*第27行，Edit.cshtml會產生名稱為fId、fTitle、fImage、fDate表單欄位，
+                這四個欄位會和Edit(int fId, string fTitle, string fImage, DateTome fDate)方法進行資料繫結*@
+            @Html.EditorFor(model => model.fTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.fTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">圖示</label>
+        <div class="col-md-10">
+            @*第37-40行，Edit.cshtml會產生名稱為fId、fTitle、fImage、fDate表單欄位，
+                這四個欄位會和Edit(int fId, string fTitle, string fImage, DateTome fDate)方法進行資料繫結*@
+            @*第37-40行，新增名稱為fImage的圖示下拉式清單欄位*@
+            <select id="fImage" name="fImage" class="form-control">
+                <option value="0.png" @(Model.fImage == "0.png" ? "selected" : "")>重要</option>
+                <option value="1.png" @(Model.fImage == "1.png" ? "selected" : "")>普通</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">完成日</label>
+        <div class="col-md-10">
+            @*第51行，Edit.cshtml會產生名稱為fId、fTitle、fImage、fDate表單欄位，
+                這四個欄位會和Edit(int fId, string fTitle, string fImage, DateTome fDate)方法進行資料繫結*@
+            @*第51行，@Html.EditorFor()方法可用來產生文字方塊欄位，將此欄位變更為使用日期清單欄位且為必填，以方便使用者輸入日期資料*@
+            @Html.EditorFor(model => model.fDate, new { htmlAttributes = new { @class = "form-control",
+                type = "date", required = "required" } })
+            @Html.ValidationMessageFor(model => model.fDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="儲存" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("返回待辦事項列表", "Index")
+</div>

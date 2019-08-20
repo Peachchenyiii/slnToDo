@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @*指定網頁的語系為utf-8*@
+    <meta charset="utf-8" />
+    @*指定網頁畫面能隨裝置的螢幕自動縮放*@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*@ViewBag.Title動態屬性可在控制器中設定，此處@ViewBag.Title在Index.cshtml已指定為「待辦事項」*@
+    <title>@ViewBag.Title - 待辦事項管理網站</title>
+    @*第10-11行使用Bootstrap的CSS樣式*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @*第13行使用Bootstrap和jQuery的JS函數*@
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    @*第18-33行網頁尾首的巡覽列*@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*使用HtmlHelper的@Html.ActionLink()方法連結到Home控制器的Index方法，套用CSS樣是名稱為navbar-brand*@
+                @Html.ActionLink("待辦事項管理網站", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    @*網頁內文區域*@
+    <div class="container body-content">
+        @*View檢視頁面會放入此處與版面配置頁的@RenderBody()區域進行合併*@
+        @RenderBody()
+        <hr />
+        <footer>
+            @*@DateTime.Now.Year會取得系統的年份*@
+            <p>&copy; @DateTime.Now.Year - 待辦事項管理網站</p>
+        </footer>
+    </div>
+
+    @*第47、48行使用Bootstrap和jQuery的JS函數*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
